@@ -11,8 +11,9 @@ export class GamesService {
     Repository<Game>) {
   }
 
+  //POST
   create(createGameDto: CreateGameDto) {
-    return 'This action adds a new game';
+    return this.gameRepository.insert(createGameDto);
   }
 
   findAll() {
