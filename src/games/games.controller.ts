@@ -3,6 +3,7 @@ import { GamesService } from './games.service';
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiBearerAuth('defaultBearerAuth')
 @Controller('games')
@@ -19,6 +20,7 @@ export class GamesController {
     return this.gamesService.update(+id, updateGameDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.gamesService.findAll();

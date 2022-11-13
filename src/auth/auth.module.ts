@@ -8,6 +8,7 @@ import { UsersService } from 'src/users/users/users.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { User } from './entities/user.entity';
+import { JwtStrategy } from './jwt.strategy';
 import { LocalStrategy } from './local.auth';
 
 @Module({
@@ -23,7 +24,7 @@ import { LocalStrategy } from './local.auth';
     },
     inject: [ConfigService]
   }), TypeOrmModule.forFeature([User])],
-  providers: [AuthService, UsersService, LocalStrategy],
+  providers: [AuthService, UsersService, LocalStrategy, JwtStrategy],
   controllers: [AuthController]
 })
 export class AuthModule {}
