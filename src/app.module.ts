@@ -5,6 +5,10 @@ import { GamesModule } from './games/games.module';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Game } from './games/entities/game.entity';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { User } from './auth/entities/user.entity';
+import { AuthService } from './auth/auth/auth.service';
 
 @Module({
   imports: [
@@ -15,10 +19,12 @@ import { Game } from './games/entities/game.entity';
       username: 'homestead',
       password: 'secret',
       database: 'NestJS',
-      entities: [Game],
+      entities: [Game, User],
       synchronize: false,
     }),
-    GamesModule],
+    GamesModule,
+    AuthModule,
+    UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })
