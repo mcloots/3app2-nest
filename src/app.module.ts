@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { GamesModule } from './games/games.module';
@@ -6,25 +7,24 @@ import { GamesModule } from './games/games.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Game } from './games/entities/game.entity';
 import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
+import { UserModule } from './users/user.module';
 import { User } from './auth/entities/user.entity';
-import { AuthService } from './auth/auth/auth.service';
+import { getEnvPath } from './common/helper/env.helper';
+import { MySqlConfigService } from './typeorm/mysql-config.service';
+
+const envFilePath: string = getEnvPath(`${__dirname}/common/envs`);
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 33060, //3306 is default
-      username: 'homestead',
-      password: 'secret',
-      database: 'NestJS',
-      entities: [Game, User],
-      synchronize: false,
+    ConfigModule.forRoot({ envFilePath, isGlobal: true }),
+    TypeOrmModule.forRootAsync({
+      useClass: MySqlConfigService,
+      inject: [MySqlConfigService]
     }),
     GamesModule,
-    AuthModule,
-    UsersModule],
+    UserModule,
+    AuthModule
+    ],
   controllers: [AppController],
   providers: [AppService],
 })
