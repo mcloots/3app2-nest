@@ -22,18 +22,6 @@ export class AuthService {
       return user;
     }
     return null;
-
-    // if (user != null) {
-    //   const payload = { email: user.email, sub: user.id };
-    //   const access_token = this.jwtService.sign(payload);
-    //   let auth_user : UserAuthenticatedDto = {
-    //     id: user.id,
-    //     email: user.email,
-    //     access_token: access_token
-    //   }
-    //   return auth_user;
-    // }
-    // throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
   }
 
   async login(user: User) {
